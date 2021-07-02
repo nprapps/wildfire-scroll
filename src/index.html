@@ -1,0 +1,66 @@
+<!doctype html>
+<%
+var doc = grunt.data.archieml.story;
+var renderMarkdownText = text => t.renderMarkdown(text).replace(/<\/?p>/g, "");
+var project = Object.assign({}, grunt.data.json.project, doc.social);
+%>
+<html lang="en-US">
+  <head>
+    <%= t.include("partials/_head.html", { project }) %>
+    <link rel="stylesheet" type="text/css" href="style.css">
+  </head>
+  <body>
+
+    <main class="sequence">
+
+      <header class="splash image slide">
+        <img
+          src="./assets/ignored/GettyImages-1228763017.jpg"
+          class="backdrop"
+          alt=""
+        >
+        <div class="darken">
+          <div class="chatter">
+            <img class="logo" src="./assets/logo-outline.svg" alt="NPR">
+            <h1><%= doc.intro.headline %></h1>
+            <%= t.renderMarkdown(doc.intro.chatter) %>
+            <div class="bylines">
+              <%= doc.intro.bylines %> | Published <%= doc.intro.published %>
+            </div>
+          </div>
+
+          <div class="scroll-bug" aria-hidden="true">
+            scroll
+            <svg viewBox="0 0 50 50" width="50" height="25">
+              <path
+                d="M 0,0 L 25,25 50,0"
+              ></path>
+            </svg>
+          </div>
+        </div>
+      </header>
+
+      <%
+        doc.sequence.forEach(function(slide) {
+          if (slide.type == "skip") return;
+          print(t.include(`_${slide.type || "image"}.html`, { slide }));
+        });
+      %>
+    </main>
+
+    <script>
+// image unloading for lazy-load
+var lazy = Array.prototype.slice.call(document.querySelectorAll(".sequence .slide:nth-child(n + 3) [src]"));
+lazy.forEach(function(img) {
+  img.setAttribute("data-src", img.getAttribute("src"));
+  img.removeAttribute("src", "");
+});
+    </script>
+    <script>
+// data for the power graphic
+window.DATA = <%= JSON.stringify(json.data) %>;
+    </script>
+    <script src="app.js" async></script>
+    <%= t.include("partials/_analytics.html") %>
+  </body>
+</html>

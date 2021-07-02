@@ -1,0 +1,21 @@
+<section class="image slide align-<%= slide.align || "right" %> <%= slide.classes %>" id="<%= slide.id %>">
+  <img
+    src="./assets/ignored/<%= slide.image %>"
+    class="backdrop"
+    alt=""
+
+  >
+  <% if (slide.inset) { %>
+  <img class="inset" src="./assets/synced/<%= slide.inset%>" alt="">
+  <% } %>
+  <div class="text">
+    <div class="content">
+      <%= t.renderMarkdown(slide.text) %>
+    </div>
+    <% if (slide.caption) { %>
+    <div class="caption">
+      <span class="sr-only">Caption:</span> <%= slide.caption %>
+    </div>
+    <% } %>
+  </div>
+</section>

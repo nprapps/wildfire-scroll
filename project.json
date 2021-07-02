@@ -1,0 +1,33 @@
+{
+  "s3": {
+    "stage": {
+      "bucket": "stage-apps.npr.org",
+      "path": "united-state-wildfire"
+    },
+    "live": {
+      "bucket": "apps.npr.org",
+      "path": "united-states-wildfire"
+    }
+  },
+  "styles": {
+    "src/css/seed.less": "build/style.css"
+  },
+  "scripts": {
+    "src/js/main.js": "build/app.js"
+  },
+  "title": "",
+  "description": "",
+  "url": "",
+  "image": "assets/logo.png",
+  "analytics": {
+    "topicIDs": [],
+    "primaryTopic": "",
+    "secondaryTopics": []
+  },
+  "sheets": [],
+  "docs": {
+    "story": "1oKU9wIAjmTEU3bLtu3XbuJrOLukCPs3WAJdKirRqgdk"
+  },
+  "embedded": true,
+  "production": false
+}
