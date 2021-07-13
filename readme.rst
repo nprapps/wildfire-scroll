@@ -1,4 +1,4 @@
-test
+United States Of Wildfire
 ======================================================
 
 This news app is built on our `interactive template <https://github.com/nprapps/interactive-template>`_. Check the readme for that template for more details about the structure and mechanics of the app, as well as how to start your own project.
@@ -14,8 +14,8 @@ To run this project you will need:
 
 With those installed, you can then set the project up using your terminal:
 
-#. Pull the code - ``git clone git@github.com:nprapps/test``
-#. Enter the project folder - ``cd test``
+#. Pull the code - ``git clone git@github.com:nprapps/wildfire-scroll``
+#. Enter the project folder - ``cd wildfire-scroll``
 #. Install dependencies from NPM - ``npm install``
 #. Start the server - ``grunt``
 
