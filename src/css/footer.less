@@ -1,0 +1,151 @@
+footer.closing {
+  .gotham();
+  background: #222;
+  min-height: 100vh;
+  padding-bottom: 44px;
+
+  h4 {
+    .knockout-header();
+    color: @white;
+    font-size: 1rem;
+    margin: 0 0 11px 0;
+  }
+
+  hr {
+    margin: 33px auto;
+    border-style: none;
+    height: 1px;
+    background-color: @gray-light;
+  }
+
+  .constrained {
+    max-width: 800px;
+    margin: auto;
+  }
+
+  .social {
+    border-top: 1px solid lighten(@gray-light,20%);
+    padding-top: 11px;
+
+    h4 {
+      font-size: 1rem;
+      margin: 0 0 22px 0;
+      text-align: center;
+    }
+
+    ul {
+      display: flex;
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      justify-content: center;
+      font-size: .9rem;
+
+      > li {
+        margin: 0 6px;
+        padding: 0;
+      }
+    }
+
+    .social-link {
+      border: 1px solid @gray-intermediate;
+      padding: 5px 10px;
+      text-decoration: none;
+      background: transparent;
+      color: white;
+      width: auto;
+      display: inline-block;
+      font-size: inherit;
+
+      &:hover, &:active, &:focus {
+        border-color: @gray-intermediate;
+        color: @gray-intermediate;
+
+        // img { opacity: 0.5; }
+      }
+
+      img, svg {
+        width: .9rem;
+        height: auto;
+        vertical-align: text-top;
+        margin-right: 3px;
+      }
+    }
+  }
+
+  .native-share {
+    display: none;
+    padding: 24px 0;
+    text-align: center;
+  }
+
+  .navigator-share-supported & {
+    .link-share { display: none; }
+    .native-share { display: block; }
+  }
+
+  .about {
+    padding: 44px 20px;
+  }
+
+  .side-by-side {
+    display: flex;
+    margin-bottom: 22px;
+
+    .block {
+      padding-right: 12px;
+    }
+
+    @media @mobile {
+      display: block;
+    }
+
+    & > * {
+      flex: 0 0 50%;
+    }
+  }
+
+  .credits {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+
+    li {
+      margin-bottom: .5rem;
+    }
+  }
+
+  .npr {
+    padding: 0 20px;
+
+    a, a:visited {
+      color: @links-medium;
+      text-decoration: none;
+
+      &:hover, &:focus {
+        color: @links-medium-hover;
+      }
+    }
+
+    ul {
+      border-top: 1px solid @gray-dark;
+      color: @links-medium;
+      font-size: 0.8rem;
+      list-style-type: none;
+      margin: 0;
+      padding: 11px 0 0 0;
+
+      li {
+        display: block;
+        margin: 0 22px 3px 0;
+        padding: 0;
+        text-indent: 0;
+        white-space: nowrap;
+
+        @media @mobile-above {
+          display: inline-block;
+        }
+      }
+    }
+  }
+}
