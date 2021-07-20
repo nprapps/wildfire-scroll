@@ -3,7 +3,10 @@
     class="backdrop"
     data-src="./assets/synced/images/<%= slide.image %>"
     alt=""
-    
+    style="<%= t.style({
+      "object-fit": slide.contain ? "contain" : false,
+      "object-position": slide.anchor
+    }) %>"
   >
   <% if (slide.inset) { %>
   <img class="inset" src="./assets/synced/<%= slide.inset%>" alt="">
