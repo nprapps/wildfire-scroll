@@ -1,0 +1,63 @@
+// ai2html artboard sizes
+.g-artboard {
+  @media screen and (min-width: 900px) {
+    &[id$="-small"],
+    &[id$="-medium"],
+    &[id$="-wide"] {
+      display: none !important;
+    }
+  }
+
+  @media screen and (max-width: 899px) and (min-width: 730px) {
+    &[id$="-small"],
+    &[id$="-medium"],
+    &[id$="-full_bleed"] {
+      display: none !important;
+    }
+  }
+
+  @media screen and (max-width: 729px) and (min-width: 400px) {
+    &[id$="-small"],
+    &[id$="-wide"],
+    &[id$="-full_bleed"] {
+      display: none !important;
+    }
+  }
+
+  @media screen and (max-width: 399px) {
+    &[id$="-medium"],
+    &[id$="-wide"],
+    &[id$="-full_bleed"] {
+      display: none !important;
+    }
+  }
+}
+
+.ai2html .backdrop {
+
+  .g-artboard {
+    position: absolute !important;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    [id$="graphic"] {
+      max-height: 100%;
+      // max-height: 100vh;
+      height: auto;
+      width: auto;
+      min-width: 0;
+      min-height: 0;
+      position: relative;
+
+    img {
+      width: auto !important;
+      max-height: 100vh;
+    }
+  }
+}
+}
