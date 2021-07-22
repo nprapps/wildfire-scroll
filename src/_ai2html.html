@@ -3,6 +3,11 @@
   <div class="backdrop">
   <%= t.include(`./ai2html/_${slide.include}.html`, { slide }) %>
   </div>
-  <%= t.include("partials/_text.html", { slide }) %>
+
+  <div class="content">
+      <%= t.include("partials/_text.html", { slide }) %>
+
+      <% if (slide.includeLegend) print(t.include(`ai2html/_${slide.includeLegend}.html`, { slide })) %>
+    </div>
 
 </section>
