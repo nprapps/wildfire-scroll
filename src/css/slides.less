@@ -55,6 +55,61 @@
     animation: none;
   }
 
+  @media @mobile-above {
+  &.opposing {
+    .backdrop {
+      width: 50%;
+      max-width: 800px;
+      left: 50%;
+      transform: translateX(-100%);
+      flex-direction: column
+    }
+
+    .content {
+      // max-width: none;
+    }
+
+    .text {
+      // margin-left: 0;
+    }
+
+    &.align-left {
+      .backdrop {
+        left: auto;
+        right: 50%;
+        transform: translateX(100%);
+      }
+
+      .text {
+        // margin-right: 0;
+        // margin-left: auto;
+      }
+    }
+
+    .image-container {
+      margin: 20px;
+    }
+  }
+
+  .align-left, .align-right {
+    .content {
+      width: 50%;
+    }
+  }
+
+  .align-left {
+    .content {
+      float: left;
+    }
+  }
+
+  .align-right {
+    .content {
+      float: right;
+    }
+  }
+}
+
 
   .inset {
     position: fixed;
