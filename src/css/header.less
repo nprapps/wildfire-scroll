@@ -1,6 +1,5 @@
 @textShadow: 0 0 8px darken(#333, 0.2);
 
-
 header.splash {
   height: 200vh;
   overflow: hidden;
@@ -20,7 +19,7 @@ header.splash {
     left: 0;
   }
 
-  div.darken{
+  div.darken {
     position: relative;
     z-index: 99;
     display: flex;
@@ -31,7 +30,11 @@ header.splash {
     width: 100%;
     overflow: auto;
     // background-color: rgba(0,0,0,0.5);
-    background-image: linear-gradient(to bottom, fade(black, 50%) calc(~"100% - 100px"), transparent);
+    background-image: linear-gradient(
+      to bottom,
+      fade(black, 50%) calc(~"100% - 100px"),
+      transparent
+    );
     padding-bottom: 100px;
   }
 
@@ -93,11 +96,89 @@ header.splash {
     }
   }
 
-  h1, p {
+  h1,
+  p {
     // @fade: fade(darken(@sky-blue, 30%), 30%);
     // background: @fade;
     // box-shadow: 0 0 32px 32px @fade;
     // padding: 0 20px;
     // border-radius: 40px;
   }
+}
+
+.a11y-controls {
+  padding: 0 0 11px 0;
+  line-height: 1;
+  text-align: center;
+
+  @media @mobile-above {
+    padding: 20px 0;
+  }
+
+  input[type="checkbox"] {
+    .sr-only;
+
+    & + label {
+      .gotham();
+      color: @gray-light;
+      cursor: pointer;
+      font-size: 12px;
+      font-style: italic;
+      padding: 8px;
+    }
+
+    &:focus + label,
+    label:focus {
+      outline: 1px solid @gray-intermediate;
+    }
+
+    & + label::after {
+      font-style: normal;
+      display: inline-block;
+      content: "✘";
+      margin-left: 8px;
+      width: 1.2em;
+      height: 1.2em;
+      border-radius: 2px;
+      line-height: 1.2em;
+      color: @gray-intermediate;
+      background: @gray-dark;
+      cursor: pointer;
+      border: 1px solid darken(@gray-medium, 15%);
+    }
+
+    &:checked + label::after {
+      // Because green looks a little weird here
+      background: @gray-intermediate;
+      content: "✔";
+      color: @gray-dark;
+      border-color: transparent;
+    }
+  }
+}
+
+.fixed {
+  position: fixed;
+  bottom: 30px;
+  right: 0;
+  z-index: 100;
+  padding: 5px 0;
+  background: rgba(0, 0, 0, 0.5);
+
+  input[type="checkbox"] {
+    // &:checked + label::after {
+    //   background: @bay-blue-medium;
+    //   color: @off-white;
+    // }
+
+    @media @mobile {
+      & + label {
+        font-size: 10px;
+      }
+    }
+  }
+}
+
+.hidden {
+  visibility: hidden;
 }

@@ -2,8 +2,10 @@
 
 var $ = require("./lib/qsa");
 var track = require("./lib/tracking");
+require("./video");
 
 var slides = $(".sequence .slide").reverse();
+var autoplayWrapper = $.one(".a11y-controls");
 
 var completion = 0;
 
@@ -33,6 +35,13 @@ var activateSlide = function(slide) {
   slide.classList.add("active");
   slide.classList.remove("exiting");
   active = slide;
+
+  // Assuming first (intro) slide is not video
+  if (slide.dataset.type === "video") {
+    autoplayWrapper.classList.remove("hidden");
+  } else {
+    autoplayWrapper.classList.add("hidden");
+  }
 }
 
 var onScroll = function() {
