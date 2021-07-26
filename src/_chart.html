@@ -1,0 +1,22 @@
+<section class="chart slide" id="<%= slide.id %>">
+
+  <!-- <img
+    src="./assets/photos/<%= slide.image %>"
+    class="backdrop"
+    alt=""
+    style="<%= t.style({ "object-fit": slide.contain ? "contain" : false }) %>"
+  > -->
+
+  <div class="graphic <%= slide.chart %>">
+    <div class="chatter before">
+      <%= t.renderMarkdown(slide.text) %>
+    </div>
+    <div class="container" role="img" aria-label="<%= slide.caption %>"></div>
+    <div class="chatter after">
+      <% if (slide.caption) { %>
+      <div class="caption" aria-hidden="true"><span class="sr-only">Caption:</span> <%= slide.caption %></div>
+      <% } %>
+      <%= t.renderMarkdown(slide.after || "") %>
+    </div>
+  </div>
+</section>

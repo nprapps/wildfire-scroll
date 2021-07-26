@@ -25,10 +25,8 @@ module.exports = function(grunt) {
         ["@babel/preset-env", {
           targets: { browsers: ["safari >= 11"]},
           loose: true,
-          modules: false
-        }]],
-        // this comes with preset-env
-        plugins: ["@babel/plugin-proposal-class-properties"]
+          modules: "auto"
+        }]]
       });
 
       //make sure build/ exists

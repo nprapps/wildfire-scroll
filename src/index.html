@@ -113,7 +113,8 @@ lazy.forEach(function(img) {
     </script>
     <script>
       // // data for the power graphic
-      // window.DATA = <%= JSON.stringify(json.data) %>;
+      window.DATA = <%= JSON.stringify(json.data) %>;
+      window.LABELS = <%= JSON.stringify(json.labels) %>;
     </script>
     <script src="app.js" async></script>
     <%= t.include("partials/_analytics.html") %>
