@@ -1,11 +1,11 @@
 {
-  "name": "test",
+  "name": "United States of Wildfire",
   "description": "",
   "version": "0.0.1",
   "author": "Connie Jin",
   "repository": {
     "type": "git",
-    "url": "https://github.com/nprapps/test.git"
+    "url": "https://github.com/nprapps/wildfire-scroll.git"
   },
   "dependencies": {
     "@babel/core": "^7.4.3",
