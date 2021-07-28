@@ -1,6 +1,6 @@
-<% if (Array.isArray(slide.text)) {
+<% if (slide.textSections) {
   
-    slide.text.forEach(function(d) { %>
+    slide.textSections.forEach(function(d) { %>
     <div class="text">
     <div class="content">
       <%= t.renderMarkdown(d.text) %>
