@@ -1,5 +1,5 @@
 var { isMobile } = require("./lib/breakpoints");
-var { COLORS, makeTranslate, wrapText, getAPMonth } = require("./lib/helpers");
+var { classify, COLORS, makeTranslate, wrapText, getAPMonth } = require("./lib/helpers");
 
 var d3 = {
   ...require("d3-axis/dist/d3-axis.min"),
@@ -17,7 +17,7 @@ var fmtYearFull = d => d.getFullYear();
 // Render a column chart.
 module.exports = function(config) {
   // Setup chart container
-  var { labelColumn, valueColumn } = config;
+  var { labelColumn, valueColumn, dateColumn } = config;
 
   var aspectWidth = isMobile.matches ? 4 : 16;
   var aspectHeight = isMobile.matches ? 3.5 : 9;
@@ -67,28 +67,10 @@ module.exports = function(config) {
     .range([0, chartWidth])
     // .round(true)
     .padding(0)
-    .domain(config.data.map(d => d[labelColumn]));
+    .domain(config.data[0].values.map(d => d[labelColumn]));
 
-  var floors = config.data.map(
-    d => Math.floor(d[valueColumn] / roundTicksFactor) * roundTicksFactor
-  );
-
-  var min = Math.min(...floors);
-
-  var min = -2;
-
-  if (min > 0) {
-    min = 0;
-  }
-
-  var ceilings = config.data.map(
-    d => Math.ceil(d[valueColumn] / roundTicksFactor) * roundTicksFactor
-  );
-
-  var max = Math.max(...ceilings);
-  if (isMobile.matches) {
-    max = 5;
-  }
+  var min = -3;
+  var max = 5;
 
   var yScale = d3
     .scaleLinear()
@@ -143,22 +125,22 @@ module.exports = function(config) {
     .text(yAxisLabel)
 
 
-  var duration_dates = [
-      {
-        'begin':xScale('1981'),
-        'end':xScale('2010')+xScale.bandwidth(),
-        'top': yScale(2.23)-5,
-        'bottom':yScale(-0.76)+5,
-        'text': LABELS.bucket1
-      },
-      {
-        'begin':xScale('1991'),
-        'end':xScale('2020')+xScale.bandwidth(),
-        'top': yScale(3.26)-5,
-        'bottom':yScale(-0.76)+5,
-        'text': LABELS.bucket2
-      }
-  ];
+  // var duration_dates = [
+  //     {
+  //       'begin':xScale('1981'),
+  //       'end':xScale('2010')+xScale.bandwidth(),
+  //       'top': yScale(2.23)-5,
+  //       'bottom':yScale(-0.76)+5,
+  //       'text': LABELS.bucket1
+  //     },
+  //     {
+  //       'begin':xScale('1991'),
+  //       'end':xScale('2020')+xScale.bandwidth(),
+  //       'top': yScale(3.26)-5,
+  //       'bottom':yScale(-0.76)+5,
+  //       'text': LABELS.bucket2
+  //     }
+  // ];
 
 
   // var durationBars = chartElement.insert('g','*')
@@ -260,18 +242,15 @@ module.exports = function(config) {
   //   // .call(wrapText, annotationWidth, annotationLineHeight);
 
 
-
-
-
-
-
+  var barData = config.data.filter(d => d.name == "amt")[0].values;
+  var lineData = config.data.filter(d => d.name == "nat_avg" || d.name == "ne_avg");
 
   // Render bars to chart.
   chartElement
     .append("g")
     .attr("class", "bars")
     .selectAll("rect")
-    .data(config.data)
+    .data(barData)
     .enter()
     .append("rect")
     .attr("x", d => xScale(d[labelColumn]))
@@ -298,6 +277,25 @@ module.exports = function(config) {
       .attr("y2", yScale(0));
   }
 
+
+  // Average line function
+  var line = d3
+    .line()
+    .x(d => xScale(d[labelColumn]))
+    .y(d => yScale(d[valueColumn]));
+
+  
+  chartElement
+    .append("g")
+    .attr("class", "lines")
+    .selectAll("path")
+    .data(lineData)
+    .enter()
+    .append("path")
+    .attr("class", d => `line ${classify(d.name)}`)    
+    .attr("d", d => line(d.values));
+
+
   // chartElement
   //   .append("text")
   //   .attr("class", "annotations-y")      // text label for the x axis
@@ -308,42 +306,44 @@ module.exports = function(config) {
   //   .call(wrapText, annotationWidth, annotationLineHeight);
 
   // Render bar values.
-  chartElement
-    .append("g")
-    .attr("class", "value")
-    .selectAll("text")
-    .data(config.data)
-    .enter()
-    .append("text")
-    // .text(d => d[valueColumn].toFixed(0))
-    .attr("x", d => xScale(d[labelColumn]) + xScale.bandwidth() / 2)
-    .attr("y", d => yScale(d[valueColumn]))
-    .attr("dy", function(d) {
-      var textHeight = this.getBBox().height;
-      var $this = d3.select(this);
-      var barHeight = 0;
+  // chartElement
+  //   .append("g")
+  //   .attr("class", "value")
+  //   .selectAll("text")
+  //   .data(config.data)
+  //   .enter()
+  //   .append("text")
+  //   // .text(d => d[valueColumn].toFixed(0))
+  //   .attr("x", d => xScale(d[labelColumn]) + xScale.bandwidth() / 2)
+  //   .attr("y", d => yScale(d[valueColumn]))
+  //   .attr("dy", function(d) {
+  //     var textHeight = this.getBBox().height;
+  //     var $this = d3.select(this);
+  //     var barHeight = 0;
 
-      if (d[valueColumn] < 0) {
-        barHeight = yScale(d[valueColumn]) - yScale(0);
+  //     if (d[valueColumn] < 0) {
+  //       barHeight = yScale(d[valueColumn]) - yScale(0);
 
-        if (textHeight + valueGap * 2 < barHeight) {
-          $this.classed("in", true);
-          return -(textHeight - valueGap / 2);
-        } else {
-          $this.classed("out", true);
-          return textHeight + valueGap;
-        }
-      } else {
-        barHeight = yScale(0) - yScale(d[valueColumn]);
+  //       if (textHeight + valueGap * 2 < barHeight) {
+  //         $this.classed("in", true);
+  //         return -(textHeight - valueGap / 2);
+  //       } else {
+  //         $this.classed("out", true);
+  //         return textHeight + valueGap;
+  //       }
+  //     } else {
+  //       barHeight = yScale(0) - yScale(d[valueColumn]);
 
-        if (textHeight + valueGap * 2 < barHeight) {
-          $this.classed("in", true);
-          return textHeight + valueGap;
-        } else {
-          $this.classed("out", true);
-          return -(textHeight - valueGap / 2);
-        }
-      }
-    })
-    .attr("text-anchor", "middle");
+  //       if (textHeight + valueGap * 2 < barHeight) {
+  //         $this.classed("in", true);
+  //         return textHeight + valueGap;
+  //       } else {
+  //         $this.classed("out", true);
+  //         return -(textHeight - valueGap / 2);
+  //       }
+  //     }
+  //   })
+  //   .attr("text-anchor", "middle");
+
+
 };
