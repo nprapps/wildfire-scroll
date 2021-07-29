@@ -25,16 +25,18 @@ var formatData = function(data) {
   });
 
   // Restructure tabular data for easier charting.
-  for (var column in data[0]) {
+  for (var column in data[20]) {
     if (column == "date" || column == "label") continue;
 
     series.push({
       name: column,
-      values: data.map(d => ({
-        date: d.date,
-        label: d.label,
-        amt: d[column]
-      }))
+      values: data
+        .filter(d => typeof d[column] !== 'undefined')
+        .map(d => ({
+          date: d.date,
+          label: d.label,
+          amt: d[column]
+        }))
     });
   }
 
