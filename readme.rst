@@ -42,3 +42,18 @@ Troubleshooting
 **Fatal error: Port 35729 is already in use by another process.**
 
 The live reload port is shared between this and other applications. If you're running another interactive-template project or Dailygraphics Next, they may collide. If that's the case, use ``--reload-port=XXXXX`` to set a different port for the live reload server. You can also specify a port for the webserver with ``--port=XXXX``, although the app will automatically find the first available port after 8000 for you.
+
+
+Pre-processing videos and photos
+--------------------------------
+
+1. Install the following dependencies:
+	- ffmpeg: `brew install ffmpeg` (this can take a little while)
+	- imagemagick: `brew install imagemagick`
+1. Inside your `assets` folder, create an `originals` folder.
+1. Inside `originals` , create a `videos` folder and `images` folder.
+1. Place assets into respective folders
+1. In your `assets` folder, run the `process_assets.sh` file from the command line.
+
+* Make sure `originals/` is added to your `.gitignore`
+* After pre-processing your images and videos, you will need to restart your server to incorporate them into your project. Control-C then grunt.
