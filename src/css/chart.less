@@ -37,10 +37,26 @@
 .line {
   fill: none;
   stroke: #fff;
-  stroke-width: 3px;
+  stroke-width: 8px;
   opacity: 0;
+  // stroke-dasharray: 1px 1px;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+
+  &.active {
+    opacity: 1;
+  }
 }
 
 .nat_avg {
-  opacity: 1;
+  // opacity: 1;
+  // stroke: #ccc;
+  opacity: .7;
+}
+
+.value text {
+  .gotham();
+
+  fill: #fff;
+  font-size:14px;
 }

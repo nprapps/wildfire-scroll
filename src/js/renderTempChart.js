@@ -71,6 +71,7 @@ module.exports = function(config) {
 
   var min = -3;
   var max = 5;
+  var labelMax = 4;
 
   var yScale = d3
     .scaleLinear()
@@ -121,128 +122,129 @@ module.exports = function(config) {
   chartElement.append('text')
     .classed('chart-label-title', true)
     .attr('x', xScale(1901)-5)
-    .attr('y', yScale(max)+4)
+    .attr('y', yScale(labelMax)+4)
     .text(yAxisLabel)
 
-
-  // var duration_dates = [
-  //     {
-  //       'begin':xScale('1981'),
-  //       'end':xScale('2010')+xScale.bandwidth(),
-  //       'top': yScale(2.23)-5,
-  //       'bottom':yScale(-0.76)+5,
-  //       'text': LABELS.bucket1
-  //     },
-  //     {
-  //       'begin':xScale('1991'),
-  //       'end':xScale('2020')+xScale.bandwidth(),
-  //       'top': yScale(3.26)-5,
-  //       'bottom':yScale(-0.76)+5,
-  //       'text': LABELS.bucket2
-  //     }
-  // ];
-
-
-  // var durationBars = chartElement.insert('g','*')
-  //   .attr('class', 'duration')
-  //   .selectAll('rect')
-  //   .data(duration_dates)
-  //   .enter()
-  //     .append('rect')
-  //     .attr('x', d => d['begin'])
-  //     .attr('width', d => d['end'] - d['begin'])
-  //     .attr('y', d => d['top'])
-  //     .attr('height', d=> chartHeight-d["top"]-(chartHeight-d["bottom"]))
-
-  // var annoLine = d3
-  //   .line()
-  //   // .curve(d3.curveBasis)
-  //   .x(d => d.x)
-  //   .y(d => d.y)
-
-  // chartElement.append("g")
-  //   .attr('class', 'duration')
-  //   .selectAll('rect')
-  //   .data(duration_dates)
-  //   .enter()
-  //   .append("path")
-  //   .attr("class","anno-line")
-  //   .attr("d", function(d,i) {
-  //     var yOffset = 10;
-
-  //     if (isMobile.matches) {
-  //       yOffset = 10;
-  //     }
-
-  //     // if (isMobile.matches && Number(d.x_mobile_offset)) {
-  //     //   thisxOffset = d.x_mobile_offset;
-  //     //   thisyOffset = d.y_mobile_offset;
-  //     // }  else {
-  //     //   thisxOffset = d.xOffset;
-  //     //   thisyOffset = d.yOffset;
-  //     // }
-  //     // if (i === 0) {
-  //       // var aboveBelow = "bottom";
-  //       // var sign = -1;
-  //     // } else {
-  //       var aboveBelow = "top";
-  //       var sign = 1;
-  //     // }
-  //     var coords = [
-  //       {
-  //         x:d["begin"],
-  //         y:d[aboveBelow]+(yOffset*sign)
-  //       },
-  //       {
-  //         x:d["begin"],
-  //         y:d[aboveBelow]
-  //       },
-  //       {
-  //         x:d["begin"]+(d["end"]-d["begin"])/2,
-  //         y:d[aboveBelow]
-  //       },
-  //       {
-  //         x:d["begin"]+(d["end"]-d["begin"])/2,
-  //         y:d[aboveBelow]-(10*sign)
-  //       },
-  //       {
-  //         x:d["begin"]+(d["end"]-d["begin"])/2,
-  //         y:d[aboveBelow]
-  //       },
-  //       {
-  //         x:d["end"],
-  //         y:d[aboveBelow]
-  //       },
-  //       {
-  //         x: d["end"],
-  //         y: d[aboveBelow]+(yOffset*sign)
-  //       }
-  //     ]
-
-  //     return annoLine(coords);
-  //   })
+  var duration_dates = [
+      {
+        'begin':xScale(1981),
+        'end':xScale(2020)+xScale.bandwidth(),
+        'top': yScale(3.26)-5,
+        'bottom':yScale(-0.76)+5,
+        'text': LABELS.bucket1
+      },
+      // {
+      //   'begin':xScale(2001),
+      //   'end':xScale(2020)+xScale.bandwidth(),
+      //   'top': yScale(4.093)-5,
+      //   'bottom':yScale(0)+5,
+      //   'text': LABELS.bucket2
+      // }
+  ];
 
 
-  // chartElement
-  //   .append("g")
-  //   .attr("class","annotations")
-  //   .selectAll("text")
-  //   .data(duration_dates)
-  //   .enter()
-  //   .append("text")
-  //   .attr("x",d => d["begin"]+(d["end"]-d["begin"])/2)
-  //   .attr("y",(d,i) => {
-  //     // if (i==0) {
-  //       // return d["bottom"]+25;
-  //     // } else {
-  //       return d["top"]-15
-  //     // }
-  //   })
-  //   .text(d => d.text)
-  //   // .call(wrapText, annotationWidth, annotationLineHeight);
+  var durationBars = chartElement.insert('g','*')
+    .attr('class', 'duration')
+    .selectAll('rect')
+    .data(duration_dates)
+    .enter()
+      .append('rect')
+      .attr('x', d => d['begin'])
+      .attr('width', d => d['end'] - d['begin'])
+      .attr('y', d => d['top'])
+      .attr('height', d=> chartHeight-d["top"]-(chartHeight-d["bottom"]))
+
+  var annoLine = d3
+    .line()
+    .x(d => d.x)
+    .y(d => d.y)
+
+  chartElement.append("g")
+    .attr('class', 'duration')
+    .selectAll('rect')
+    .data(duration_dates)
+    .enter()
+    .append("path")
+    .attr("class","anno-line")
+    .attr("d", function(d,i) {
+      var yOffset = 10;
+
+      if (isMobile.matches) {
+        yOffset = 10;
+      }
+
+      // if (isMobile.matches && Number(d.x_mobile_offset)) {
+      //   thisxOffset = d.x_mobile_offset;
+      //   thisyOffset = d.y_mobile_offset;
+      // }  else {
+      //   thisxOffset = d.xOffset;
+      //   thisyOffset = d.yOffset;
+      // }
+      // if (i === 0) {
+        // var aboveBelow = "bottom";
+        // var sign = -1;
+      // } else {
+        var aboveBelow = "top";
+        var sign = 1;
+      // }
+      var coords = [
+        {
+          x:d["begin"],
+          y:d[aboveBelow]+(yOffset*sign)
+        },
+        {
+          x:d["begin"],
+          y:d[aboveBelow]
+        },
+        {
+          x:d["begin"]+(d["end"]-d["begin"])/2,
+          y:d[aboveBelow]
+        },
+        {
+          x:d["begin"]+(d["end"]-d["begin"])/2,
+          y:d[aboveBelow]-(10*sign)
+        },
+        {
+          x:d["begin"]+(d["end"]-d["begin"])/2,
+          y:d[aboveBelow]
+        },
+        {
+          x:d["end"],
+          y:d[aboveBelow]
+        },
+        {
+          x: d["end"],
+          y: d[aboveBelow]+(yOffset*sign)
+        }
+      ]
+
+      console.log(coords)
+
+      return annoLine(coords);
+    })
+
+
+  chartElement
+    .append("g")
+    .attr("class","annotations")
+    .selectAll("text")
+    .data(duration_dates)
+    .enter()
+    .append("text")
+    .attr("x",d => d["begin"]+(d["end"]-d["begin"])/2)
+    .attr("y",(d,i) => {
+      // if (i==0) {
+        // return d["bottom"]+25;
+      // } else {
+        return d["top"]-15
+      // }
+    })
+    .text(d => d.text)
+    // .call(wrapText, annotationWidth, annotationLineHeight);
 
 
   var barData = config.data.filter(d => d.name == "amt")[0].values;
+  var barDataNortheast = config.data.filter(d => d.name == "amt_NE")[0].values;
   var lineData = config.data.filter(d => d.name == "nat_avg" || d.name == "ne_avg");
 
   // Render bars to chart.
@@ -281,69 +283,18 @@ module.exports = function(config) {
   // Average line function
   var line = d3
     .line()
-    .x(d => xScale(d[labelColumn]))
+    .x(d => xScale(d[labelColumn]) + xScale.bandwidth())
     .y(d => yScale(d[valueColumn]));
 
   
-  chartElement
-    .append("g")
-    .attr("class", "lines")
-    .selectAll("path")
-    .data(lineData)
-    .enter()
-    .append("path")
-    .attr("class", d => `line ${classify(d.name)}`)    
-    .attr("d", d => line(d.values));
-
-
-  // chartElement
-  //   .append("text")
-  //   .attr("class", "annotations-y")      // text label for the x axis
-  //   .attr("x", chartWidth + 5)
-  //   .attr("y",  10)
-  //   .style("text-anchor", "top")
-  //   .text("2020: +1.8°F")
-  //   .call(wrapText, annotationWidth, annotationLineHeight);
-
-  // Render bar values.
   // chartElement
   //   .append("g")
-  //   .attr("class", "value")
-  //   .selectAll("text")
-  //   .data(config.data)
+  //   .attr("class", "lines")
+  //   .selectAll("path")
+  //   .data(lineData)
   //   .enter()
-  //   .append("text")
-  //   // .text(d => d[valueColumn].toFixed(0))
-  //   .attr("x", d => xScale(d[labelColumn]) + xScale.bandwidth() / 2)
-  //   .attr("y", d => yScale(d[valueColumn]))
-  //   .attr("dy", function(d) {
-  //     var textHeight = this.getBBox().height;
-  //     var $this = d3.select(this);
-  //     var barHeight = 0;
-
-  //     if (d[valueColumn] < 0) {
-  //       barHeight = yScale(d[valueColumn]) - yScale(0);
-
-  //       if (textHeight + valueGap * 2 < barHeight) {
-  //         $this.classed("in", true);
-  //         return -(textHeight - valueGap / 2);
-  //       } else {
-  //         $this.classed("out", true);
-  //         return textHeight + valueGap;
-  //       }
-  //     } else {
-  //       barHeight = yScale(0) - yScale(d[valueColumn]);
-
-  //       if (textHeight + valueGap * 2 < barHeight) {
-  //         $this.classed("in", true);
-  //         return textHeight + valueGap;
-  //       } else {
-  //         $this.classed("out", true);
-  //         return -(textHeight - valueGap / 2);
-  //       }
-  //     }
-  //   })
-  //   .attr("text-anchor", "middle");
-
+  //   .append("path")
+  //   .attr("class", d => `line ${classify(d.name)}`)    
+  //   .attr("d", d => line(d.values));
 
 };

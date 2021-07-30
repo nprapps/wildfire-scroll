@@ -3,13 +3,12 @@ var renderColumnChart = require("./renderTempChart");
 // Initialize the graphic.
 var onWindowLoaded = function() {  
   var series = formatData(window.DATA);
-  console.log(series)
   render(series);
 
 
   // render(window.DATA);
 
-  window.addEventListener("resize", () => render(window.DATA));
+  window.addEventListener("resize", () => render(series));
 };
 
 //Format graphic data for processing by D3.
