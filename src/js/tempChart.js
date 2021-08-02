@@ -1,15 +1,19 @@
 var renderColumnChart = require("./renderTempChart");
+var $ = require("./lib/qsa");
+
+var rendered = false;
 
 // Initialize the graphic.
 var onWindowLoaded = function() {  
   var series = formatData(window.DATA);
-  render(series);
+
+  window.addEventListener("scroll", () => onScroll(series));
 
 
-  // render(window.DATA);
-
-  window.addEventListener("resize", () => render(series));
+  onScroll(series);
+  // window.addEventListener("resize", () => render(series));
 };
+
 
 //Format graphic data for processing by D3.
 var formatData = function(data) {
@@ -43,9 +47,8 @@ var formatData = function(data) {
 };
 
 
-
 // Render the graphic(s)
-var render = function(data) {
+var render = function(data, northeast) {
   // Render the chart!
   var container = ".graphic.temp-changes .container";
   var element = document.querySelector(container);
@@ -56,9 +59,28 @@ var render = function(data) {
     data,
     labelColumn: "label",
     valueColumn: "amt",
-    dateColumn: "date"
+    dateColumn: "date",
+    northeast
   });
 };
+
+function isInViewport(elm) {
+  var rect = elm.getBoundingClientRect();
+  var viewHeight = Math.max(document.documentElement.clientHeight, window.innerHeight);
+  return !(rect.bottom < 0 || rect.top - viewHeight >= 0);
+}
+
+var onScroll = function(data) {
+  if (isInViewport($.one('#section-1'))) {
+    // console.log('section 1')
+    render(data, false);
+  } else if (isInViewport($.one('#section-2'))) {
+    // console.log('section 2')
+    render(data, true);
+  }
+}
+
+
 
 //Initially load the graphic
 window.onload = onWindowLoaded;

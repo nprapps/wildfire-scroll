@@ -1,22 +1,27 @@
-<section class="chart slide" id="<%= slide.id %>">
-
-  <!-- <img
-    src="./assets/photos/<%= slide.image %>"
+<section class="chart slide align-<%= slide.align || "right" %> <%= slide.layout %> <%= slide.classes %> <%= slide.constrain %>" id="<%= slide.id %>" data-type="chart">
+  <div
     class="backdrop"
+    data-src="./assets/synced/images/<%= slide.image %>"
     alt=""
-    style="<%= t.style({ "object-fit": slide.contain ? "contain" : false }) %>"
-  > -->
-
+    style="<%= t.style({
+      "object-position": slide.anchor
+    }) %>"
+  >
   <div class="graphic <%= slide.chart %>">
-    <div class="chatter before">
-      <%= t.renderMarkdown(slide.text) %>
-    </div>
-    <div class="container" role="img" aria-label="<%= slide.caption %>"></div>
-    <div class="chatter after">
-      <% if (slide.caption) { %>
-      <div class="caption" aria-hidden="true"><span class="sr-only">Caption:</span> <%= slide.caption %></div>
-      <% } %>
-      <%= t.renderMarkdown(slide.after || "") %>
+    <div class="container">
+      <div class="graphic-wrapper">
+        <svg id="main-chart"></svg>
+      </div>
+      
     </div>
   </div>
+</div>
+  <% if (slide.inset) { %>
+  <img class="inset" src="./assets/synced/<%= slide.inset%>" alt="">
+  <% } %>
+  <% if (slide.credit) { %>
+  <span class="watermark" alt=""><%=slide.credit%></span>
+  <% } %>
+  <%= t.include("partials/_text.html", { slide }) %>
 </section>
+
