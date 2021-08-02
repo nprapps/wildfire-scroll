@@ -218,8 +218,6 @@ module.exports = function(config) {
         }
       ]
 
-      console.log(coords)
-
       return annoLine(coords);
     })
 
