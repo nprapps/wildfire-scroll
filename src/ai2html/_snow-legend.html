@@ -3,18 +3,17 @@
     <b></b><h4><%= t.renderMarkdown(slide.graphicTitle) %></h4>
     <ul>
     <li><b></b><label></label></li>
-    <li><b></b><label>-45</label></li>
-    <li><b></b><label>-30</label></li>
-    <li><b></b><label>-15</label></li>
-    <li><b></b><label>0</label></li>
-    <li><b></b><label>15</label></li>
-    <li><b></b><label>30</label></li>
-    <li><b></b><label>45</label></li>
-    <li><b></b><label></label></li>
+    <li><b></b><label>-45 days</label></li>
+    <li><b></b><label>-30 days</label></li>
+    <li><b></b><label>-15 days</label></li>
+    <li><b></b><label>0 days</label></li>
+    <li><b></b><label>+15 days</label></li>
+    <li><b></b><label>+30 days</label></li>
+    <li><b></b><label>+45 days</label></li>
   </ul>
   <div class="grey-label">
     <b></b>
-    <label>Areas with a mean snow season of less than 30 days or a maximum snow water equivalent of less than 10mm</label>
+    <label><%= t.renderMarkdown(slide.dataLabel) %></label>
   </div>
   </div>
 </div>
