@@ -1,13 +1,15 @@
 var renderColumnChart = require("./renderTempChart");
+var debounce = require("./lib/debounce");
 var $ = require("./lib/qsa");
 
 var rendered = false;
+var secondSection;
 
 // Initialize the graphic.
 var onWindowLoaded = function() {  
   var series = formatData(window.DATA);
 
-  window.addEventListener("scroll", () => onScroll(series));
+  window.addEventListener("scroll", debounce(() => onScroll(series), 50));
 
 
   onScroll(series);
@@ -71,15 +73,12 @@ function isInViewport(elm) {
 }
 
 var onScroll = function(data) {
-  if (isInViewport($.one('#section-1'))) {
-    // console.log('section 1')
-    render(data, false);
-  } else if (isInViewport($.one('#section-2'))) {
-    // console.log('section 2')
-    render(data, true);
+  if (!isInViewport($.one('#section-1')) && !isInViewport($.one('#section-2'))) return;
+  if (isInViewport($.one('#section-2')) !== secondSection) {
+    secondSection = isInViewport($.one('#section-2'));
+    render(data, secondSection);
   }
 }
-
 
 
 //Initially load the graphic

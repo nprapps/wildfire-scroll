@@ -17,6 +17,7 @@ var d3 = {
 };
 
 var bars;
+var durationBars;
 var fmtComma = s => s.toLocaleString().replace(/\.0+$/, "");
 var fmtYearAbbrev = d => "\u2019" + (d.getFullYear() + "").slice(-2);
 var fmtYearFull = d => d.getFullYear();
@@ -54,15 +55,11 @@ module.exports = function (config) {
 
   // Clear existing graphic (for redraw)
   var containerElement = d3.select(config.container);
-  containerElement.html("");
 
   // Create the root SVG element.
-  var chartWrapper = containerElement
-    .append("div")
-    .attr("class", "graphic-wrapper");
-
-  var chartElement = chartWrapper
-    .append("svg")
+  var chartWrapper = d3.select(".graphic-wrapper");
+  var chartElement = d3
+    .select("#main-chart")
     .attr("width", chartWidth + margins.left + margins.right)
     .attr("height", chartHeight + margins.top + margins.bottom)
     .append("g")
@@ -148,26 +145,55 @@ module.exports = function (config) {
       bottom: yScale(-0.76) + 5,
       text: LABELS.bucket1,
     },
-    // {
-    //   'begin':xScale(2001),
-    //   'end':xScale(2020)+xScale.bandwidth(),
-    //   'top': yScale(4.093)-5,
-    //   'bottom':yScale(0)+5,
-    //   'text': LABELS.bucket2
-    // }
   ];
 
-  var durationBars = chartElement
-    .insert("g", "*")
-    .attr("class", "duration")
+  var duration_dates_northeast = [
+    {
+      begin: xScale(2001),
+      end: xScale(2020) + xScale.bandwidth(),
+      top: yScale(4.093) - 5,
+      bottom: yScale(0) + 5,
+      text: LABELS.bucket2,
+    },
+  ];
+
+  if (!durationBars) {
+    durationBars = chartElement
+      .insert("g", "*")
+      .attr("class", "duration")
+      .selectAll("rect")
+      .data(config.northeast ? duration_dates_northeast : duration_dates)
+      .enter();
+
+      durationBars.append("rect")
+      .attr("x", d => d["begin"])
+      .attr("width", d => d["end"] - d["begin"])
+      .attr("y", d => d["top"])
+      .attr(
+        "height",
+        d => chartHeight - d["top"] - (chartHeight - d["bottom"])
+      )
+  }
+
+  // Create a update selection: bind to the new data
+  var durBars = durationBars
     .selectAll("rect")
-    .data(duration_dates)
-    .enter()
+    .data(config.northeast ? duration_dates_northeast : duration_dates);
+
+  // Updata the line
+  durBars.enter()
     .append("rect")
+    .merge(durBars)
+    .transition()
+    .duration(1000)
+    .delay(200)
     .attr("x", d => d["begin"])
-    .attr("width", d => d["end"] - d["begin"])
-    .attr("y", d => d["top"])
-    .attr("height", d => chartHeight - d["top"] - (chartHeight - d["bottom"]));
+      .attr("width", d => d["end"] - d["begin"])
+      .attr("y", d => d["top"])
+      .attr(
+        "height",
+        d => chartHeight - d["top"] - (chartHeight - d["bottom"])
+      );
 
   var annoLine = d3
     .line()
@@ -264,39 +290,42 @@ module.exports = function (config) {
   );
 
   // Render bars to chart.
-  bars = chartElement
-    .append("g")
-    .attr("class", "bars")
-    .selectAll("rect")
-    .data(config.northeast ? barDataNortheast : barData)
-    .enter();
+  if (!bars) {
+    bars = chartElement
+      .append("g")
+      .attr("class", "bars")
+      .selectAll("rect")
+      .data(config.northeast ? barDataNortheast : barData)
+      .enter();
 
-  bars
-    .append("rect")
-    .attr("x", d => xScale(d[labelColumn]))
-    .attr("y", d => (d[valueColumn] < 0 ? yScale(0) : yScale(d[valueColumn])))
-    .attr("width", xScale.bandwidth())
-    .attr("height", d =>
-      d[valueColumn] < 0
-        ? yScale(d[valueColumn]) - yScale(0)
-        : yScale(0) - yScale(d[valueColumn])
-    )
-    .attr("class", function (d) {
-      var pos = d[valueColumn] > 0 ? "pos" : "neg";
-      return "bar bar-" + d[labelColumn] + " " + pos;
-    });
+    bars
+      .append("rect")
+      .attr("x", d => xScale(d[labelColumn]))
+      .attr("y", d => (d[valueColumn] < 0 ? yScale(0) : yScale(d[valueColumn])))
+      .attr("width", xScale.bandwidth())
+      .attr("height", d =>
+        d[valueColumn] < 0
+          ? yScale(d[valueColumn]) - yScale(0)
+          : yScale(0) - yScale(d[valueColumn])
+      )
+      .attr("class", function (d) {
+        var pos = d[valueColumn] > 0 ? "pos" : "neg";
+        return "bar bar-" + d[labelColumn] + " " + pos;
+      });
+  }
 
   // Create a update selection: bind to the new data
   var u = bars
     .selectAll("rect")
-    .data(config.northeast ? barData : barDataNortheast);
+    .data(config.northeast ? barDataNortheast : barData);
 
   // Updata the line
   u.enter()
     .append("rect")
     .merge(u)
     .transition()
-    .duration(3000)
+    .duration(1000)
+    .delay(200)
     .attr("y", d => (d[valueColumn] < 0 ? yScale(0) : yScale(d[valueColumn])))
     .attr("height", d =>
       d[valueColumn] < 0
@@ -320,5 +349,4 @@ module.exports = function (config) {
     .line()
     .x(d => xScale(d[labelColumn]) + xScale.bandwidth())
     .y(d => yScale(d[valueColumn]));
-
 };
