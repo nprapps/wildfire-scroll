@@ -112,3 +112,71 @@
 .highlight {
   border-bottom: 2px solid @yellow;
 }
+
+#snowmelt-graphic {
+  .legend {
+    ul {
+      display: flex;
+      list-style-type: none;
+      margin: 0 auto;
+      min-width: 250px;
+      padding: 0;
+      position: relative;
+
+      li {
+        margin: 0;
+        padding: 0;
+        width: calc(100% / 6);
+
+        + li {
+          margin-left: 1px;
+        }
+
+        &:nth-child(1) b {
+          background-color: #67001f;
+        }
+        &:nth-child(2) b {
+          background-color: #ae172a;
+        }
+        &:nth-child(3) b {
+          background-color: #e17860;
+        }
+        &:nth-child(4) b {
+          background-color: #fbd0b9;
+        }
+        &:nth-child(5) b {
+          background-color: #f9f9f9;
+        }
+        &:nth-child(6) b {
+          background-color: #a7d0e4;
+        }
+        &:nth-child(7) b {
+          background-color: #5fa5cd;
+        }
+        &:nth-child(8) b {
+          background-color: #1f63a8;
+        }
+        &:nth-child(9) b {
+          background-color: #053061;
+        }
+      }
+
+      b {
+        display: block;
+        width: 100%;
+        height: 15px;
+      }
+
+      label {
+        .gotham();
+        display: block;
+        color: @gray-light;
+        width: 40px;
+        text-align: center;
+        margin-left: -20px;
+        margin-top: 5px;
+        font-size: 12px;
+      }
+    }
+  }
+}
