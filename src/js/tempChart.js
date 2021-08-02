@@ -11,9 +11,7 @@ var onWindowLoaded = function() {
 
   window.addEventListener("scroll", debounce(() => onScroll(series), 50));
 
-
   onScroll(series);
-  // window.addEventListener("resize", () => render(series));
 };
 
 
@@ -23,9 +21,6 @@ var formatData = function(data) {
 
   data.forEach(function(d) {
     if (d.date instanceof Date) return;
-    // var [m, day, y] = d.date.split("/").map(Number);
-    // y = y > 50 ? 1900 + y : 2000 + y;
-    // d.date = new Date(y, m - 1, day);
     d.date = new Date(d.label,1,1)
   });
 

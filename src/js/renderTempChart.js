@@ -11,7 +11,6 @@ var d3 = {
   ...require("d3-axis/dist/d3-axis.min"),
   ...require("d3-scale/dist/d3-scale.min"),
   ...require("d3-shape/dist/d3-shape.min"),
-  // ...require("d3-interpolate/dist/d3-interpolate.min"),
   ...require("d3-selection/dist/d3-selection.js"),
   ...require("d3-transition/dist/d3-transition.js"),
 };
@@ -165,14 +164,15 @@ module.exports = function (config) {
       .data(config.northeast ? duration_dates_northeast : duration_dates)
       .enter();
 
-      durationBars.append("rect")
+    durationBars
+      .append("rect")
       .attr("x", d => d["begin"])
       .attr("width", d => d["end"] - d["begin"])
       .attr("y", d => d["top"])
       .attr(
         "height",
         d => chartHeight - d["top"] - (chartHeight - d["bottom"])
-      )
+      );
   }
 
   // Create a update selection: bind to the new data
@@ -181,19 +181,17 @@ module.exports = function (config) {
     .data(config.northeast ? duration_dates_northeast : duration_dates);
 
   // Updata the line
-  durBars.enter()
+  durBars
+    .enter()
     .append("rect")
     .merge(durBars)
     .transition()
     .duration(1000)
     .delay(200)
     .attr("x", d => d["begin"])
-      .attr("width", d => d["end"] - d["begin"])
-      .attr("y", d => d["top"])
-      .attr(
-        "height",
-        d => chartHeight - d["top"] - (chartHeight - d["bottom"])
-      );
+    .attr("width", d => d["end"] - d["begin"])
+    .attr("y", d => d["top"])
+    .attr("height", d => chartHeight - d["top"] - (chartHeight - d["bottom"]));
 
   var annoLine = d3
     .line()
@@ -331,7 +329,11 @@ module.exports = function (config) {
       d[valueColumn] < 0
         ? yScale(d[valueColumn]) - yScale(0)
         : yScale(0) - yScale(d[valueColumn])
-    );
+    )
+    .attr("class", function (d) {
+      var pos = d[valueColumn] > 0 ? "pos" : "neg";
+      return "bar bar-" + d[labelColumn] + " " + pos;
+    });
 
   // Render 0 value line.
   if (min < 0) {
