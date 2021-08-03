@@ -1,15 +1,20 @@
-var renderColumnChart = require("./renderTempChart");
+var {renderChart, updateChart} = require("./renderTempChart");
+var debounce = require("./lib/debounce");
+var $ = require("./lib/qsa");
+
+var rendered = false;
+var secondSection;
 
 // Initialize the graphic.
 var onWindowLoaded = function() {  
   var series = formatData(window.DATA);
-  render(series);
 
-
-  // render(window.DATA);
-
-  window.addEventListener("resize", () => render(series));
+  if (isInViewport($.one('#section-1')) || isInViewport($.one('#section-2'))) render(series);
+  window.addEventListener("scroll", debounce(() => onScroll(series), 50));
+  window.addEventListener("resize", debounce(() => render(series), 50));
+  
 };
+
 
 //Format graphic data for processing by D3.
 var formatData = function(data) {
@@ -17,9 +22,6 @@ var formatData = function(data) {
 
   data.forEach(function(d) {
     if (d.date instanceof Date) return;
-    // var [m, day, y] = d.date.split("/").map(Number);
-    // y = y > 50 ? 1900 + y : 2000 + y;
-    // d.date = new Date(y, m - 1, day);
     d.date = new Date(d.label,1,1)
   });
 
@@ -43,22 +45,40 @@ var formatData = function(data) {
 };
 
 
-
 // Render the graphic(s)
 var render = function(data) {
+  console.log("in render");
   // Render the chart!
   var container = ".graphic.temp-changes .container";
   var element = document.querySelector(container);
   var width = element.offsetWidth;
-  renderColumnChart({
+  renderChart({
     container,
     width,
     data,
     labelColumn: "label",
     valueColumn: "amt",
-    dateColumn: "date"
+    dateColumn: "date",
+    northeast: isInViewport($.one('#section-2'))
   });
+  rendered = true;
 };
+
+function isInViewport(elm) {
+  var rect = elm.getBoundingClientRect();
+  var viewHeight = Math.max(document.documentElement.clientHeight, window.innerHeight);
+  return !(rect.bottom < 0 || rect.top - viewHeight >= 0);
+}
+
+var onScroll = function(data) {
+  if (!isInViewport($.one('#section-1')) && !isInViewport($.one('#section-2'))) return;
+  if (!rendered) render(data);
+  if (isInViewport($.one('#section-2')) !== secondSection) {
+    secondSection = isInViewport($.one('#section-2'));
+    updateChart(data, secondSection);
+  }
+}
+
 
 //Initially load the graphic
 window.onload = onWindowLoaded;

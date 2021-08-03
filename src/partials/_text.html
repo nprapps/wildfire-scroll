@@ -1,7 +1,7 @@
 <% if (slide.textSections) {
   
     slide.textSections.forEach(function(d) { %>
-    <div class="text">
+    <div class="text" id="<%= d.id %>">
     <div class="content">
       <%= t.renderMarkdown(d.text) %>
     </div>
