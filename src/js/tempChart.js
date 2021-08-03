@@ -1,4 +1,4 @@
-var renderColumnChart = require("./renderTempChart");
+var {renderChart, updateChart} = require("./renderTempChart");
 var debounce = require("./lib/debounce");
 var $ = require("./lib/qsa");
 
@@ -9,9 +9,10 @@ var secondSection;
 var onWindowLoaded = function() {  
   var series = formatData(window.DATA);
 
+  if (isInViewport($.one('#section-1')) || isInViewport($.one('#section-2'))) render(series);
   window.addEventListener("scroll", debounce(() => onScroll(series), 50));
-
-  onScroll(series);
+  window.addEventListener("resize", debounce(() => render(series), 50));
+  
 };
 
 
@@ -45,20 +46,22 @@ var formatData = function(data) {
 
 
 // Render the graphic(s)
-var render = function(data, northeast) {
+var render = function(data) {
+  console.log("in render");
   // Render the chart!
   var container = ".graphic.temp-changes .container";
   var element = document.querySelector(container);
   var width = element.offsetWidth;
-  renderColumnChart({
+  renderChart({
     container,
     width,
     data,
     labelColumn: "label",
     valueColumn: "amt",
     dateColumn: "date",
-    northeast
+    northeast: isInViewport($.one('#section-2'))
   });
+  rendered = true;
 };
 
 function isInViewport(elm) {
@@ -69,9 +72,10 @@ function isInViewport(elm) {
 
 var onScroll = function(data) {
   if (!isInViewport($.one('#section-1')) && !isInViewport($.one('#section-2'))) return;
+  if (!rendered) render(data);
   if (isInViewport($.one('#section-2')) !== secondSection) {
     secondSection = isInViewport($.one('#section-2'));
-    render(data, secondSection);
+    updateChart(data, secondSection);
   }
 }
 
