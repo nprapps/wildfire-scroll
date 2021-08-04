@@ -39,8 +39,8 @@ var renderChart = function (config) {
   var valueGap = 6;
 
   var margins = {
-    top: 30,
-    right: 10,
+    top: 5,
+    right: 20,
     bottom: 20,
     left: 34,
   };
@@ -94,7 +94,15 @@ var renderChart = function (config) {
   var xAxis = d3
     .axisBottom()
     .scale(xScale)
-    .tickValues([
+    .tickValues(isMobile.matches ? [
+      1900,
+      1920,
+      1940,
+      1960,
+      1980,
+      2000,
+      2020,
+    ] : [
       1900,
       1910,
       1920,
