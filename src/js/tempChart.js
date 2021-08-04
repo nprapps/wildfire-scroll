@@ -9,7 +9,7 @@ var secondSection;
 var onWindowLoaded = function() {  
   var series = formatData(window.DATA);
 
-  if (isInViewport($.one('#section-1')) || isInViewport($.one('#section-2'))) render(series);
+  render(series);
   window.addEventListener("scroll", debounce(() => onScroll(series), 50));
   window.addEventListener("resize", debounce(() => render(series), 50));
   
@@ -47,8 +47,8 @@ var formatData = function(data) {
 
 // Render the graphic(s)
 var render = function(data) {
-  console.log("in render");
   // Render the chart!
+  if (!isInViewport($.one('#section-1')) && !isInViewport($.one('#section-2'))) return;
   var container = ".graphic.temp-changes .container";
   var element = document.querySelector(container);
   var width = element.offsetWidth;
