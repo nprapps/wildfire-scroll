@@ -257,6 +257,10 @@ var renderChart = function (config) {
     d => d.name == "nat_avg" || d.name == "ne_avg"
   );
 
+  d3.select("#graphic-hed").html(
+    config.northeast ? LABELS.graphic_northeast_hed : LABELS.graphic_hed
+  );
+
   // Render bars to chart.
   bars = chartElement
     .append("g")
@@ -301,6 +305,10 @@ var renderChart = function (config) {
 var updateChart = function (data, northeast) {
   var name = northeast ? "amt_NE" : "amt";
   var data = data.filter(d => d.name == name)[0].values;
+
+  d3.select("#graphic-hed").html(
+    northeast ? LABELS.graphic_northeast_hed : LABELS.graphic_hed
+  );
   // Create a update selection: bind to the new data
   var durBars = durationBars
     .selectAll("rect")
