@@ -185,7 +185,7 @@
     box-shadow: 0 24px 8px -8px fade(black, 20%);
     margin-bottom: 60px;
     margin: 5vh 40px 90vh;
-    width: 35%;
+    max-width: 600px;
     float: right;
 
     .align-left& {
@@ -195,6 +195,10 @@
     .align-center& {
       float: none;
       margin: 5vh auto 90vh;
+
+      @media screen and (max-width: 760px){
+        margin: 5vh 20px 90vh;
+      }
     }
 
     .city-locator {
@@ -206,10 +210,11 @@
       }
     }
 
-    @media @mobile {
+    @media screen and (max-width: 760px){
       width: auto;
-      font-size: 15px;
+      font-size: 16px;
       padding: 20px;
+      margin: 0;
       margin: 5vh 20px 90vh;
     }
   }
