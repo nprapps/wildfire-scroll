@@ -55,60 +55,62 @@
     animation: none;
   }
 
+
+
   @media @mobile-above {
-  &.opposing {
-    .backdrop {
-      width: 50%;
-      max-width: 800px;
-      left: 50%;
-      transform: translateX(-100%);
-      flex-direction: column
-    }
-
-    .content {
-      // max-width: none;
-    }
-
-    .text {
-      // margin-left: 0;
-    }
-
-    &.align-left {
+    &.opposing {
       .backdrop {
-        left: auto;
-        right: 50%;
-        transform: translateX(100%);
+        width: 50%;
+        max-width: 800px;
+        left: 50%;
+        transform: translateX(-100%);
+        flex-direction: column
+      }
+
+      .content {
+        // max-width: none;
       }
 
       .text {
-        // margin-right: 0;
-        // margin-left: auto;
+        // margin-left: 0;
+      }
+
+      &.align-left {
+        .backdrop {
+          left: auto;
+          right: 50%;
+          transform: translateX(100%);
+        }
+
+        .text {
+          // margin-right: 0;
+          // margin-left: auto;
+        }
+      }
+
+      .image-container {
+        margin: 20px;
       }
     }
 
-    .image-container {
-      margin: 20px;
+    .align-left, .align-right {
+      .content {
+        width: 50%;
+      }
     }
-  }
 
-  .align-left, .align-right {
-    .content {
-      width: 50%;
+    .align-left {
+      .content {
+        float: left;
+      }
     }
-  }
 
-  .align-left {
-    .content {
-      float: left;
+    .align-right {
+      .content {
+        float: right;
+      }
     }
   }
-
-  .align-right {
-    .content {
-      float: right;
-    }
-  }
-}
 
 
   .inset {
@@ -163,6 +165,13 @@
     .watermark,
     .inset {
       display: block;
+    }
+  }
+
+  &.map {
+    .backdrop {
+      animation: none;
+      object-fit: contain !important;
     }
   }
 
