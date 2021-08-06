@@ -36,6 +36,7 @@ var renderChart = function (config) {
 
   var aspectWidth = isMobile.matches ? 4 : 16;
   var aspectHeight = isMobile.matches ? 3.5 : 9;
+  var maxHeight = 450;
   var valueGap = 6;
 
   var margins = {
@@ -55,10 +56,14 @@ var renderChart = function (config) {
 
   // Calculate actual chart dimensions
   var chartWidth = config.width - margins.left - margins.right;
+  // chartHeight = Math.ceil((chartWidth * aspectHeight) / aspectWidth);
   chartHeight =
     Math.ceil((config.width * aspectHeight) / aspectWidth) -
     margins.top -
     margins.bottom;
+  if (chartHeight > maxHeight) {
+    chartHeight = maxHeight - margins.top - margins.bottom;
+  }
 
   // Clear existing graphic (for redraw)
   var containerElement = d3.select(config.container);
