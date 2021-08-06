@@ -20,14 +20,14 @@
   "url": "",
   "image": "assets/logo.png",
   "analytics": {
-    "topicIDs": [],
-    "primaryTopic": "",
-    "secondaryTopics": []
+    "topicIDs": [ "p1007", "p1025", "p1001" ],
+    "primaryTopic": "environment",
+    "secondaryTopics": [ 1007,1025,1001,571910677 ]
   },
   "sheets": ["1Tq3o_qT6NtcO2mU2CzerIAZNPnJM5y_ZhRPFSZh7vb4"],
   "docs": {
     "story": "1oKU9wIAjmTEU3bLtu3XbuJrOLukCPs3WAJdKirRqgdk"
   },
-  "embedded": true,
+  "embedded": false,
   "production": false
 }
