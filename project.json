@@ -6,7 +6,7 @@
     },
     "live": {
       "bucket": "apps.npr.org",
-      "path": "united-states-wildfire"
+      "path": "us-wildfires-impact-environment-climate-change"
     }
   },
   "styles": {
