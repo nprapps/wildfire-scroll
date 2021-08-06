@@ -15,9 +15,9 @@
   "scripts": {
     "src/js/main.js": "build/app.js"
   },
-  "title": "",
-  "description": "",
-  "url": "",
+  "title": "United States Of Wildfire",
+  "description": "There’s a forgotten history that should serve as a warning — wildfire isn’t unique to the West. Now the warming climate is increasing the risk of major wildfires across America. And more people are moving to fire-prone areas without realizing the danger.",
+  "url": "https://apps.npr.org/us-wildfires-impact-environment-climate-change/",
   "image": "assets/logo.png",
   "analytics": {
     "topicIDs": [ "p1007", "p1025", "p1001" ],
