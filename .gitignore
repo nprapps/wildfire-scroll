@@ -8,4 +8,5 @@ data/*.sheet.json
 data/*.docs.txt
 src/assets/synced
 src/assets/originals
+src/assets/ignored
 ignored_archive/
