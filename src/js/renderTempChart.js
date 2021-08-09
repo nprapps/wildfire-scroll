@@ -253,7 +253,7 @@ var renderChart = function (config) {
     .append("g")
     .attr("class", "annotations")
     .selectAll("text")
-    .data(duration_dates)
+    .data(config.northeast ? duration_dates_northeast : duration_dates)
     .enter()
     .append("text")
     .attr("x", d => d["begin"] + (d["end"] - d["begin"]) / 2)
