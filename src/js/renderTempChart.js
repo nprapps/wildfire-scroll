@@ -19,6 +19,8 @@ var duration_dates;
 var duration_dates_northeast;
 var bars;
 var durationBars;
+var annoBracket;
+var annoLine;
 
 var xScale;
 var yScale;
@@ -137,7 +139,7 @@ var renderChart = function (config) {
     {
       begin: xScale(1981),
       end: xScale(2020) + xScale.bandwidth(),
-      top: yScale(3.26) - 5,
+      top: yScale(4.093) - 5,
       bottom: yScale(-0.76) + 5,
       text: LABELS.bucket1,
     },
@@ -145,10 +147,10 @@ var renderChart = function (config) {
 
   duration_dates_northeast = [
     {
-      begin: xScale(2001),
+      begin: xScale(1981),
       end: xScale(2020) + xScale.bandwidth(),
       top: yScale(4.093) - 5,
-      bottom: yScale(0) + 5,
+      bottom: yScale(-0.76) + 5,
       text: LABELS.bucket2,
     },
   ];
@@ -195,16 +197,16 @@ var renderChart = function (config) {
     .attr("y", d => d["top"])
     .attr("height", d => chartHeight - d["top"] - (chartHeight - d["bottom"]));
 
-  var annoLine = d3
+  annoLine = d3
     .line()
     .x(d => d.x)
     .y(d => d.y);
 
-  chartElement
+  annoBracket = chartElement
     .append("g")
     .attr("class", "duration")
     .selectAll("rect")
-    .data(duration_dates)
+    .data(config.northeast ? duration_dates_northeast : duration_dates)
     .enter()
     .append("path")
     .attr("class", "anno-line")
@@ -322,22 +324,23 @@ var updateChart = function (data, northeast) {
   d3.select("#graphic-hed").html(
     northeast ? LABELS.graphic_northeast_hed : LABELS.graphic_hed
   );
-  // Create a update selection: bind to the new data
-  var durBars = durationBars
-    .selectAll("rect")
-    .data(northeast ? duration_dates_northeast : duration_dates);
 
-  durBars
-    .enter()
-    .append("rect")
-    .merge(durBars)
-    .transition()
-    .duration(1000)
-    .delay(200)
-    .attr("x", d => d["begin"])
-    .attr("width", d => d["end"] - d["begin"])
-    .attr("y", d => d["top"])
-    .attr("height", d => chartHeight - d["top"] - (chartHeight - d["bottom"]));
+  // Create a update selection: bind to the new data
+  // var durBars = durationBars
+  //   .selectAll("rect")
+  //   .data(northeast ? duration_dates_northeast : duration_dates);
+  //
+  // durBars
+  //   .enter()
+  //   .append("rect")
+  //   .merge(durBars)
+  //   .transition()
+  //   .duration(1000)
+  //   .delay(200)
+  //   .attr("x", d => d["begin"])
+  //   .attr("width", d => d["end"] - d["begin"])
+  //   .attr("y", d => d["top"])
+  //   .attr("height", d => chartHeight - d["top"] - (chartHeight - d["bottom"]));
 
   var u = bars.selectAll("rect").data(data);
 
@@ -357,6 +360,7 @@ var updateChart = function (data, northeast) {
       var pos = d[valueColumn] > 0 ? "pos" : "neg";
       return "bar bar-" + d[labelColumn] + " " + pos;
     });
+
 };
 
 module.exports = { updateChart, renderChart };
