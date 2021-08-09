@@ -40,11 +40,11 @@ var activateSlide = function(slide) {
   active = slide;
 
   // Assuming first (intro) slide is not video
-  if (slide.dataset.type === "video") {
-    autoplayWrapper.classList.remove("hidden");
-  } else {
-    autoplayWrapper.classList.add("hidden");
-  }
+  // if (slide.dataset.type === "video") {
+  //   autoplayWrapper.classList.remove("hidden");
+  // } else {
+  //   autoplayWrapper.classList.add("hidden");
+  // }
 }
 
 var onScroll = function() {

@@ -17,13 +17,13 @@ var autoplayers = $("video[autoplay]");
 // });
 
 // handle accessibility toggles
-var autoplayCheck = $.one("#autoplay-video");
+var autoplayChecks = $(".a11y-controls input");
 
 var toggleAutoplay = function (enable, trackThis) {
   if (trackThis) {
     track("autoplay-toggle", enable);
   }
-  autoplayCheck.checked = enable;
+  autoplayChecks.forEach(a => a.checked = enable);
   if (enable) {
     autoplayers.forEach(function (video) {
       video.setAttribute("autoplay", "");
@@ -40,11 +40,11 @@ var toggleAutoplay = function (enable, trackThis) {
   }
 };
 
-autoplayCheck.checked = flags.autoplay;
+autoplayChecks.forEach(a => a.checked = flags.autoplay);
 
-autoplayCheck.addEventListener("change", e =>
+autoplayChecks.forEach(a => a.addEventListener("change", e =>
   toggleAutoplay(e.target.checked, true)
-);
+));
 
 var reducedMotion = window.matchMedia("(prefers-reduced-motion)");
 if ("addEventListener" in reducedMotion) {
@@ -55,6 +55,6 @@ if ("addEventListener" in reducedMotion) {
   reducedMotion.addListener(() => toggleAutoplay(!reducedMotion.matches));
 }
 
-toggleAutoplay(!reducedMotion.matches && autoplayCheck.checked);
+toggleAutoplay(!reducedMotion.matches && autoplayChecks[0].checked);
 
 track("prefers-reduced-motion", reducedMotion.matches);

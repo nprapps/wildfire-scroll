@@ -29,6 +29,11 @@ var project = Object.assign({}, grunt.data.json.project, doc.social);
             </div>
           </div>
 
+          <div class="a11y-controls">
+            <input type="checkbox" checked="checked" id="autoplay-video-hdr">
+            <label for="autoplay-video-hdr">Autoplay video?</label>
+          </div>
+
           <div class="scroll-bug" aria-hidden="true">
             scroll
             <svg viewBox="0 0 50 50" width="50" height="25">
@@ -38,10 +43,6 @@ var project = Object.assign({}, grunt.data.json.project, doc.social);
             </svg>
           </div>
 
-          <div class="a11y-controls fixed hidden">
-            <input type="checkbox" checked="checked" id="autoplay-video">
-            <label for="autoplay-video">Autoplay video?</label>
-          </div>
         </div>
       </header>
 
