@@ -133,7 +133,7 @@ var renderChart = function (config) {
 
   duration_dates = [
     {
-      begin: xScale(1981),
+      begin: xScale(2002),
       end: xScale(2020) + xScale.bandwidth(),
       top: yScale(4.093) - 5,
       bottom: yScale(-0.76) + 5,
@@ -143,7 +143,7 @@ var renderChart = function (config) {
 
   duration_dates_northeast = [
     {
-      begin: xScale(1981),
+      begin: xScale(2002),
       end: xScale(2020) + xScale.bandwidth(),
       top: yScale(4.093) - 5,
       bottom: yScale(-0.76) + 5,
