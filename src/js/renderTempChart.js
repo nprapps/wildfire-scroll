@@ -136,7 +136,7 @@ var renderChart = function (config) {
       begin: xScale(2001),
       end: xScale(2020) + xScale.bandwidth(),
       top: yScale(4.093) - 5,
-      bottom: yScale(-0.76) + 5,
+      bottom: yScale(-0.1) + 5,
       text: LABELS.bucket1,
     },
   ];
@@ -146,7 +146,7 @@ var renderChart = function (config) {
       begin: xScale(2001),
       end: xScale(2020) + xScale.bandwidth(),
       top: yScale(4.093) - 5,
-      bottom: yScale(-0.76) + 5,
+      bottom: yScale(-0.1) + 5,
       text: LABELS.bucket2,
     },
   ];
