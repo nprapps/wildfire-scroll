@@ -31,7 +31,8 @@ var activateSlide = function(slide) {
       img.src = img.dataset.src;
       img.removeAttribute("data-src");
       img.poster = img.dataset.poster;
-      img.removeAttribute("data-poster");
+      img.removeAttribute("poster");
+      if ("play" in img) img.play();
     })
   });
 
