@@ -10,6 +10,10 @@ var autoplayWrapper = $.one(".a11y-controls");
 
 var completion = 0;
 
+if (false) "play canplay canplaythrough ended stalled waiting suspend".split(" ").forEach(e => {
+  $("video").forEach(v => v.addEventListener(e, console.log));
+})
+
 var active = null;
 var activateSlide = function(slide) {
   if (active == slide) return;
@@ -19,6 +23,11 @@ var activateSlide = function(slide) {
     active.classList.add("exiting");
     setTimeout(() => exiting.classList.remove("exiting"), 1000);
   }
+  // force video playback
+  $("video[autoplay]", slide).forEach(v => {
+    v.currentTime = 1;
+    v.play();
+  });
   // lazy-load neighboring slides
   var neighbors = [-1, 0, 1, 2];
   var all = $(".sequence .slide");
@@ -32,7 +41,6 @@ var activateSlide = function(slide) {
       img.removeAttribute("data-src");
       img.poster = img.dataset.poster;
       img.removeAttribute("poster");
-      if ("play" in img) img.play();
     })
   });
 
