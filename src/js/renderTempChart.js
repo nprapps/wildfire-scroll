@@ -101,29 +101,25 @@ var renderChart = function (config) {
   var xAxis = d3
     .axisBottom()
     .scale(xScale)
-    .tickValues(isMobile.matches ? [
-      1900,
-      1920,
-      1940,
-      1960,
-      1980,
-      2000,
-      2020,
-    ] : [
-      1900,
-      1910,
-      1920,
-      1930,
-      1940,
-      1950,
-      1960,
-      1970,
-      1980,
-      1990,
-      2000,
-      2010,
-      2020,
-    ]);
+    .tickValues(
+      isMobile.matches
+        ? [1900, 1920, 1940, 1960, 1980, 2000, 2020]
+        : [
+            1900,
+            1910,
+            1920,
+            1930,
+            1940,
+            1950,
+            1960,
+            1970,
+            1980,
+            1990,
+            2000,
+            2010,
+            2020,
+          ]
+    );
 
   var yAxis = d3
     .axisLeft()
@@ -325,22 +321,26 @@ var updateChart = function (data, northeast) {
     northeast ? LABELS.graphic_northeast_hed : LABELS.graphic_hed
   );
 
+  d3.select(".annotations text").html(
+    northeast ? duration_dates_northeast[0].text : duration_dates[0].text
+  );
+
   // Create a update selection: bind to the new data
-  // var durBars = durationBars
-  //   .selectAll("rect")
-  //   .data(northeast ? duration_dates_northeast : duration_dates);
-  //
-  // durBars
-  //   .enter()
-  //   .append("rect")
-  //   .merge(durBars)
-  //   .transition()
-  //   .duration(1000)
-  //   .delay(200)
-  //   .attr("x", d => d["begin"])
-  //   .attr("width", d => d["end"] - d["begin"])
-  //   .attr("y", d => d["top"])
-  //   .attr("height", d => chartHeight - d["top"] - (chartHeight - d["bottom"]));
+  var durBars = durationBars
+    .selectAll("rect")
+    .data(northeast ? duration_dates_northeast : duration_dates);
+
+  durBars
+    .enter()
+    .append("rect")
+    .merge(durBars)
+    .transition()
+    .duration(1000)
+    .delay(200)
+    .attr("x", d => d["begin"])
+    .attr("width", d => d["end"] - d["begin"])
+    .attr("y", d => d["top"])
+    .attr("height", d => chartHeight - d["top"] - (chartHeight - d["bottom"]));
 
   var u = bars.selectAll("rect").data(data);
 
@@ -360,7 +360,6 @@ var updateChart = function (data, northeast) {
       var pos = d[valueColumn] > 0 ? "pos" : "neg";
       return "bar bar-" + d[labelColumn] + " " + pos;
     });
-
 };
 
 module.exports = { updateChart, renderChart };
