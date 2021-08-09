@@ -40,7 +40,7 @@ var activateSlide = function(slide) {
       img.src = img.dataset.src;
       img.removeAttribute("data-src");
       img.poster = img.dataset.poster;
-      img.removeAttribute("poster");
+      img.removeAttribute("data-poster");
     })
   });
 
