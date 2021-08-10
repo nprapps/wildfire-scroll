@@ -80,4 +80,4 @@ var onScroll = function(data) {
 }
 
 
-onWindowLoaded();
+window.addEventListener("load", onWindowLoaded);

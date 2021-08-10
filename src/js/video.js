@@ -1,8 +1,11 @@
 var $ = require("./lib/qsa");
 var track = require("./lib/tracking");
 // var flags = require("./flags");
+var here = new URL(window.location.href);
+var renderPlatform = here.searchParams.get("renderPlatform");
 var flags = {
   autoplay: true,
+  isOne: renderPlatform && renderPlatform.match(/nprone/i)
 };
 
 var autoplayers = $("video[autoplay]");
@@ -27,7 +30,7 @@ var toggleAutoplay = function (enable, trackThis) {
   if (enable) {
     autoplayers.forEach(function (video) {
       video.setAttribute("autoplay", "");
-      if (!video.paused) return;
+      if (!video.paused || flags.isOne) return;
       var promised = video.play();
       // ignore DOMExceptions for playback, they can get tripped up by the lazy load
       if (promised) promised.catch(err => err);

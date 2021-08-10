@@ -12,7 +12,16 @@ var completion = 0;
 
 if (false) "play canplay canplaythrough ended stalled waiting suspend".split(" ").forEach(e => {
   $("video").forEach(v => v.addEventListener(e, console.log));
-})
+});
+
+// handle NPR One
+var here = new URL(window.location.href);
+var renderPlatform = here.searchParams.get("renderPlatform");
+var isOne = renderPlatform && renderPlatform.match(/nprone/i);
+if (isOne) {
+  document.body.classList.add("nprone");
+}
+
 
 var active = null;
 var activateSlide = function(slide) {
@@ -24,7 +33,7 @@ var activateSlide = function(slide) {
     setTimeout(() => exiting.classList.remove("exiting"), 1000);
   }
   // force video playback
-  $("video[autoplay]", slide).forEach(v => {
+  if (!isOne) $("video[autoplay]", slide).forEach(v => {
     v.currentTime = 1;
     v.play();
   });
@@ -74,13 +83,6 @@ var onScroll = function() {
 document.body.classList.add("boot-complete");
 window.addEventListener("scroll", onScroll);
 onScroll();
-
-// handle NPR One
-var here = new URL(window.location.href);
-var renderPlatform = here.searchParams.get("renderPlatform");
-if (renderPlatform && renderPlatform.match(/nprone/)) {
-  document.body.classList.add("nprone");
-}
 
 // link tracking
 var trackLink = function() {
