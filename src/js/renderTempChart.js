@@ -137,7 +137,7 @@ var renderChart = function (config) {
       end: xScale(2020) + xScale.bandwidth(),
       top: yScale(4.093) - 5,
       bottom: yScale(-0.1) + 5,
-      text: LABELS.bucket1,
+      text: !isMobile.matches ? LABELS.bucket1 : LABELS.bucket1.replace("average","avg."),
     },
   ];
 
@@ -147,7 +147,7 @@ var renderChart = function (config) {
       end: xScale(2020) + xScale.bandwidth(),
       top: yScale(4.093) - 5,
       bottom: yScale(-0.1) + 5,
-      text: LABELS.bucket2,
+      text: !isMobile.matches ? LABELS.bucket2 : LABELS.bucket2.replace("average","avg."),
     },
   ];
 
@@ -256,7 +256,7 @@ var renderChart = function (config) {
     .data(config.northeast ? duration_dates_northeast : duration_dates)
     .enter()
     .append("text")
-    .attr("x", d => d["begin"] + (d["end"] - d["begin"]) / 2)
+    .attr("x", d => !isMobile.matches ? d["begin"] + (d["end"] - d["begin"]) / 2 : d["begin"] + (d["end"] - d["begin"]) / 2 - 10)
     .attr("y", (d, i) => {
       return d["top"] - 15;
     })
