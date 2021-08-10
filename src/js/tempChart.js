@@ -80,5 +80,4 @@ var onScroll = function(data) {
 }
 
 
-//Initially load the graphic
-window.onload = onWindowLoaded;
+onWindowLoaded();
