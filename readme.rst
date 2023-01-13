@@ -17,6 +17,8 @@ With those installed, you can then set the project up using your terminal:
 #. Pull the code - ``git clone git@github.com:nprapps/wildfire-scroll``
 #. Enter the project folder - ``cd wildfire-scroll``
 #. Install dependencies from NPM - ``npm install``
+#. Grab the initial document data - ``grunt docs``
+#. Sync static assets - ``grunt sync``
 #. Start the server - ``grunt``
 
 Running tasks
