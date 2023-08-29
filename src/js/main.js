@@ -1,4 +1,5 @@
 // require("./lib/pym");
+require("./analytics");
 require("./tempChart");
 
 var $ = require("./lib/qsa");
